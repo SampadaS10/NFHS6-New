@@ -1,0 +1,377 @@
+<div class="card">
+    <p-table
+        #dt
+        [value]="datadatewise"
+        [exportHeader]="'customExportHeader'"
+        [columns]="cols"
+        exportFilename="age-displacement-men-lower-limit"
+        selectionMode="multiple"
+        [(selection)]="selectedDatalist"
+        dataKey="id"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [filterDelay]="0"
+        [globalFilterFields]="['state']"
+        styleClass="p-datatable-sm p-datatable-gridlines p-datatable-striped"
+    >
+        <ng-template pTemplate="caption">
+            <div class="table-header" style="font-size: x-large">
+                FC-4M : AGE DISPLACEMENT: MEN (LOWER LIMIT)
+            </div>
+            <br />
+            <div class="flex">
+                <button
+                    type="button"
+                    pButton
+                    pRipple
+                    icon="pi pi-file"
+                    (click)="dt.exportCSV()"
+                    class="mr-2"
+                    pTooltip="CSV"
+                    tooltipPosition="bottom"
+                ></button>
+                <button
+                    type="button"
+                    pButton
+                    pRipple
+                    icon="pi pi-file-excel"
+                    (click)="exportExcel()"
+                    class="p-button-success mr-2"
+                    pTooltip="XLS"
+                    tooltipPosition="bottom"
+                ></button>
+                <button
+                    type="button"
+                    pButton
+                    pRipple
+                    icon="pi pi-file-pdf"
+                    (click)="exportPdf()"
+                    class="p-button-warning mr-2"
+                    pTooltip="PDF"
+                    tooltipPosition="bottom"
+                ></button>
+                <!-- <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button> -->
+                <div class="calendar-container" style="padding-left: 500px;padding-right: 3px;">
+                    <p-calendar [(ngModel)]="selectedDate" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true" [dateFormat]="'yy-mm-dd'"
+                      [monthNavigator]="true" [yearNavigator]="true" [yearRange]="'2000:2030'" placeholder={{this.todaysDate}} (onSelect)="datewise()" [showIcon]="true"></p-calendar>
+                  </div>
+                  
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input
+                        pInputText
+                        type="text"
+                        (input)="
+                            dt.filterGlobal(
+                                $any($event.target).value,
+                                'contains'
+                            )
+                        "
+                        placeholder="Global Search"
+                    />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr styleClass="row-accessories">
+                <th
+                    pSortableColumn="state"
+                    rowspan="2"
+                    style="
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        State
+                        <p-sortIcon field="state"></p-sortIcon>
+                    </div>
+                </th>
+            <th pSortableColumn="date"  rowspan="2"  style="min-width: 14rem; text-align: center; background-color: rgb(245, 241, 241);" >
+            
+            <div class="flex justify-content-between align-items-center">
+             Date
+             <p-sortIcon field="date"></p-sortIcon>
+             
+           </div> 
+         </th>
+                <th
+                    colspan="7"
+                    class="text-center"
+                    style="
+                        min-width: 7rem;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    Men's age(12 - 18 years)
+                </th>
+                <th
+                    rowspan="2"
+                    pSortableColumn="numberOfMen"
+                    style="
+                        min-width: 10rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        Number of Men
+                        <p-sortIcon field="numberOfMen"></p-sortIcon>
+                    </div>
+                </th>
+                <th
+                    rowspan="2"
+                    pSortableColumn="ageRatio"
+                    style="
+                        min-width: 10rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        Age Ratio(Men15/Men14)
+                        <p-sortIcon field="ageRatio"></p-sortIcon>
+                    </div>
+                </th>
+            </tr>
+
+            <tr>
+                <th
+                    pSortableColumn="age_12"
+                    style="
+                        min-width: 14rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        12
+                        <p-sortIcon field="age_12"></p-sortIcon>
+                    </div>
+                </th>
+                <th
+                    pSortableColumn="age_13"
+                    style="
+                        min-width: 14rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        13
+                        <p-sortIcon field="age_13"></p-sortIcon>
+                    </div>
+                </th>
+                <th
+                    pSortableColumn="age_14"
+                    style="
+                        min-width: 10rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        14
+                        <p-sortIcon field="age_14"></p-sortIcon>
+                    </div>
+                </th>
+                <th
+                    pSortableColumn="age_15"
+                    style="
+                        min-width: 10rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        15
+                        <p-sortIcon field="age_15"></p-sortIcon>
+                    </div>
+                </th>
+                <th
+                    pSortableColumn="age_16"
+                    style="
+                        min-width: 10rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        16
+                        <p-sortIcon field="age_16"></p-sortIcon>
+                    </div>
+                </th>
+                <th
+                    pSortableColumn="age_17"
+                    style="
+                        min-width: 10rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        17
+                        <p-sortIcon field="age_17"></p-sortIcon>
+                    </div>
+                </th>
+                <th
+                    pSortableColumn="age_18"
+                    style="
+                        min-width: 10rem;
+                        text-align: center;
+                        background-color: rgb(245, 241, 241);
+                    "
+                >
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        18
+                        <p-sortIcon field="age_18"></p-sortIcon>
+                    </div>
+                </th>
+            
+        </tr> 
+        
+        <tr  class="p-selectable-row">
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+          India
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+          
+          </th>
+
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('age_12')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('age_13')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('age_14')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('age_15')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('age_16')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('age_17')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('age_18')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('numberOfMen')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateAverage('ageRatio')||0 | number : '.2-2'}}
+          </th>
+       
+         
+        </tr> 
+        </ng-template>
+        <ng-template pTemplate="body" let-datalist>
+            <tr class="p-selectable-row">
+                <td style="text-align: center">
+                    <span class="p-column-title">Team</span>
+                    {{ datalist.state }}
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">Team</span>
+                    {{ datalist.date }}
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">visit_1</span>
+
+                    <span class="ml-1 vertical-align-middle">
+                        {{ datalist.age_12 }}</span
+                    >
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">visit_2</span>
+
+                    <span class="ml-1 vertical-align-middle">
+                        {{ datalist.age_13 }}
+                    </span>
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">visit_3</span>
+                    {{ datalist.age_14 }}
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">Persum</span>
+                    {{ datalist.age_15 }}
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">Num</span>
+                    {{ datalist.age_16 }}
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">Num</span>
+                    {{ datalist.age_17 }}
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">Num</span>
+                    {{ datalist.age_18 }}
+                </td>
+
+                <td style="text-align: center">
+                    <span class="p-column-title">Num</span>
+                    {{ datalist.numberOfMen }}
+                </td>
+                <td style="text-align: center">
+                    <span class="p-column-title">Num</span>
+                    {{ datalist.ageRatio }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="11" class="text-center">No Data Available</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

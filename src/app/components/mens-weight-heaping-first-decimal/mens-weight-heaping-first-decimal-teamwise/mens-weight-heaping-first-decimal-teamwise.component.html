@@ -1,0 +1,333 @@
+                      
+                         
+<div class="card">
+  <p-table                    
+    #dt
+    [value]="datadatewise"
+    [exportHeader]="'customExportHeader'"
+    exportFilename="mens-weight-heaping-first-decimal-teamwise"
+    [columns]="cols"
+    selectionMode="multiple"
+    [(selection)]="selectedDatalist"
+    dataKey="id"
+    [rowHover]="true"
+    [rows]="10" 
+    [showCurrentPageReport]="true" 
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="['team']"
+    styleClass="p-datatable-sm p-datatable-gridlines p-datatable-striped"
+>
+  
+    <ng-template pTemplate="caption">
+      <div class="table-header" style="font-size:x-large;">
+          FC-11M wt 1dec: HEAPING IN WEIGHT MEASUREMENTS FOR MENS - FIRST DECIMAL  OF {{this.stateName |uppercase}} 
+      </div> 
+      <br/>
+      <div class="flex">
+          <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+
+          <div class="calendar-container" style="padding-left: 500px;padding-right: 3px;">
+            <p-calendar [(ngModel)]="selectedDate" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true" [dateFormat]="'yy-mm-dd'"
+              [monthNavigator]="true" [yearNavigator]="true" [yearRange]="'2000:2030'" placeholder={{this.todaysDate}} (onSelect)="datewise()" [showIcon]="true"></p-calendar>
+          </div>
+          
+      
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Global Search"
+          />
+         
+        </span>
+       
+      </div>
+        
+    </ng-template>
+    <ng-template pTemplate="header" >
+        
+      
+      <tr styleClass="row-accessories" >                            
+        <th pSortableColumn="team"   style="text-align: center; background-color: rgb(245, 241, 241);" >
+          
+           <div class="flex justify-content-between align-items-center">
+            Team
+            <p-sortIcon field="team"></p-sortIcon>
+            
+          </div> 
+        </th>
+        <th pSortableColumn="date"   style="min-width: 14rem; text-align: center; background-color: rgb(245, 241, 241);" >
+          
+          <div class="flex justify-content-between align-items-center">
+           Date
+           <p-sortIcon field="date"></p-sortIcon>
+           
+         </div> 
+       </th>
+        <th pSortableColumn="c_0"  style="min-width: 14rem;text-align: center;background-color: rgb(245, 241, 241);;">
+          <div class="flex justify-content-between align-items-center">
+              0
+            <p-sortIcon field="c_0"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="c_1" style="min-width: 14rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+           1
+            <p-sortIcon field="c_1"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="c_2"  style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            2
+            <p-sortIcon field="c_2"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="c_3"  style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            3
+            <p-sortIcon field="c_3"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="c_4" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+           4
+            <p-sortIcon field="c_4"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="c_5" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              5
+            <p-sortIcon field="c_5"></p-sortIcon>
+            
+          </div>
+        </th>
+
+        <th pSortableColumn="c_6" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              6
+            <p-sortIcon field="c_6"></p-sortIcon>
+            
+          </div>
+        </th>  
+        <th pSortableColumn="c_7" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              7
+            <p-sortIcon field="c_7"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="c_8" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              8
+            <p-sortIcon field="c_8"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="c_9" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              9
+            <p-sortIcon field="c_9"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th  pSortableColumn="totalPercent" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              Total
+            <p-sortIcon field="totalPercent"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th  pSortableColumn="percentWithSecondDecimal_0_or_5" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              Percent with first decimal 0 to 5
+            <p-sortIcon field="percentWithSecondDecimal_0_or_5"></p-sortIcon>    
+          </div>
+        </th>
+        
+        <th  pSortableColumn="numberOfMen" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            Number of Men 15-54 with valid weight data
+            <p-sortIcon field="numberOfMen"></p-sortIcon>    
+          </div>
+        </th>
+      </tr>
+      <tr  class="p-selectable-row">
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+        {{this.stateName}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+        
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_0')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_1')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_2')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_3')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_4')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_5')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_6')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_7')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_8')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('c_9')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg2 | number : '.2-2' }}% -->
+          {{calculateAverage('totalInPercent') ||0| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg2 | number : '.2-2' }}% -->
+          {{calculateAverage('percentWithFirstDecimal_0_or_5') ||0| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg2 | number : '.2-2' }}% -->
+          {{calculateSum('numberOfMen') ||0| number : '.2-2'}}
+        </th>
+      </tr> 
+    
+
+    </ng-template>
+    <ng-template pTemplate="body" let-datalist>
+      <tr class="p-selectable-row">
+        <td style="text-align: center;">
+          <span class="p-column-title">State</span>
+          {{ datalist.team }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">State</span>
+          {{ datalist.date }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">State</span>
+          {{ datalist.c_0 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2014</span>
+          
+          <span class="ml-1 vertical-align-middle"
+            >{{ datalist.c_1  }}</span
+          >
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2015</span>
+          
+          <span class="ml-1 vertical-align-middle"
+            >{{ datalist.c_2 }}</span
+          >
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2016</span>
+          {{ datalist.c_3 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2017</span>
+          {{ datalist.c_4 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2018</span>
+          {{datalist.c_5}}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2019</span>
+          
+          {{ datalist.c_6 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2020</span>
+          
+          {{ datalist.c_7 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2021</span>
+          
+          {{ datalist.c_8 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">2022</span>
+          
+          {{ datalist.c_9 }}
+        </td>
+
+        <td style="text-align: center;">
+          <span class="p-column-title">2023</span>
+          
+          {{ datalist.totalInPercent }}
+        </td>
+
+        <td style="text-align: center;">
+          <span class="p-column-title">missing</span>
+          
+          {{ datalist.percentWithFirstDecimal_0_or_5 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">missing</span>
+          
+          {{ datalist.numberOfMen }}
+        </td>
+      
+      
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="15" class="text-center">No Data Available</td>
+        
+      </tr>
+    </ng-template>
+    
+  </p-table>
+</div>

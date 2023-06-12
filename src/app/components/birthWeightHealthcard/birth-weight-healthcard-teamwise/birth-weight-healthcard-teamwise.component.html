@@ -1,0 +1,183 @@
+                      
+                         
+<div class="card">
+    <p-table                    
+      #dt
+      [value]="datadatewise"
+      [exportHeader]="'customExportHeader'"
+      exportFilename="Birth-Weight-Healthcard-teamwise"
+      [columns]="cols"
+      selectionMode="multiple"
+      [(selection)]="selectedDatalist"
+      dataKey="id"
+      [rowHover]="true"
+      [rows]="10" 
+      [showCurrentPageReport]="true" 
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [filterDelay]="0"
+      [globalFilterFields]="['team']"
+      styleClass="p-datatable-sm p-datatable-gridlines p-datatable-striped"
+  >
+    
+      <ng-template pTemplate="caption">
+        <div class="table-header" style="font-size:x-large;">
+          BIRTH WEIGHT HEALTHCARD OF {{this.stateName | uppercase}}
+        </div> 
+        <br/>
+        <div class="flex">
+            <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+  
+            <div class="calendar-container" style="padding-left: 500px;padding-right: 3px;">
+              <p-calendar [(ngModel)]="selectedDate" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true" [dateFormat]="'yy-mm-dd'"
+                [monthNavigator]="true" [yearNavigator]="true" [yearRange]="'2000:2030'" placeholder={{this.todaysDate}} (onSelect)="datewise()" [showIcon]="true"></p-calendar>
+            </div>
+            
+        
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Global Search"
+            />
+           
+          </span>
+         
+        </div>
+          
+      </ng-template>
+      <ng-template pTemplate="header" >
+          
+        
+          <tr styleClass="row-accessories" >                            
+          <th pSortableColumn="team"  rowspan="2" style="text-align: center; background-color: rgb(245, 241, 241);" >
+            
+             <div class="flex justify-content-between align-items-center">
+              Team
+              <p-sortIcon field="team"></p-sortIcon>
+              
+            </div> 
+          </th>
+         
+          <th pSortableColumn="date" rowspan="2"  style="min-width: 14rem; text-align: center; background-color: rgb(245, 241, 241);" >
+            
+            <div class="flex justify-content-between align-items-center">
+             Date
+             <p-sortIcon field="date"></p-sortIcon>
+             
+           </div> 
+        </th>
+        
+      
+  
+        <tr>
+          <th pSortableColumn="card" style="min-width: 14rem;text-align: center;background-color: rgb(245, 241, 241);;">
+            <div class="flex justify-content-between align-items-center">
+                Card
+              <p-sortIcon field="card"></p-sortIcon>
+              
+            </div>
+          </th>
+          <th pSortableColumn="recall" style="min-width: 14rem;text-align: center;background-color: rgb(245, 241, 241);">
+            <div class="flex justify-content-between align-items-center">
+                Recall
+              <p-sortIcon field="recall"></p-sortIcon>
+              
+            </div>
+          </th>
+          <th pSortableColumn="count" style="min-width: 14rem;text-align: center;background-color: rgb(245, 241, 241);">
+            <div class="flex justify-content-between align-items-center">
+                Count
+              <p-sortIcon field="count"></p-sortIcon>
+              
+            </div>
+          </th>
+          
+          
+         
+
+          
+         
+        
+  
+        </tr> 
+        <tr  class="p-selectable-row">
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+          {{this.stateName}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+         
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('card')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('recall')| number : '.2-2'}}
+          </th>
+          <th style="text-align: center;">
+            <span class="p-column-title"></span>
+            <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+            {{calculateSum('count')||0 | number : '.2-2'}}
+          </th>
+       
+         
+        </tr> 
+      </ng-template>
+      <ng-template pTemplate="body" let-datalist>
+        <tr class="p-selectable-row">
+          
+          <td style="text-align: center;">
+            <span class="p-column-title">team</span>
+            {{ datalist.team }}
+          </td>
+          <td style="text-align: center;">
+            <span class="p-column-title">team</span>
+            {{ datalist.date }}
+          </td>
+          <td style="text-align: center;">
+            <span class="p-column-title">card
+                </span>
+            
+            <span class="ml-1 vertical-align-middle"
+              >{{ datalist.card  || 0 }}</span
+            >
+          </td>
+          <td style="text-align: center;">
+            <span class="p-column-title">recall</span>
+            
+            <span class="ml-1 vertical-align-middle"
+              >{{ datalist.recall || 0 }}</span
+            >
+          </td>
+          <td style="text-align: center;">
+            <span class="p-column-title">count</span>
+            
+            <span class="ml-1 vertical-align-middle"
+              >{{ datalist.count || 0 }}</span
+            >
+          </td>
+         
+          
+         </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center">No Data Available</td>
+          
+        </tr>
+      </ng-template>
+      
+    </p-table>
+  </div>
+  

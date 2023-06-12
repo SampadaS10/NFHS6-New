@@ -1,0 +1,232 @@
+
+<div class="card">
+  <p-table                    
+    #dt
+    [value]="datadatewise"
+    [exportHeader]="'customExportHeader'"
+    exportFilename="eligible-men-per-hh-teamwise"
+    [columns]="cols"
+    selectionMode="multiple"
+    [(selection)]="selectedDatalist"
+    dataKey="id"
+    [rowHover]="true"
+    [rows]="10" 
+    [showCurrentPageReport]="true" 
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="['team']"
+    styleClass="p-datatable-sm p-datatable-gridlines p-datatable-striped"
+>
+  
+    <ng-template pTemplate="caption">
+      <div class="table-header" style="font-size:x-large;">
+        FC-2M ELIGIBLE MEN PER HOUSEHOLD FOR {{this.stateName| uppercase}}
+      </div> 
+      <br/>
+      <div class="flex">
+          <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+          <!-- <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button> -->
+          
+          
+          <div class="calendar-container" style="padding-left: 500px;padding-right: 3px;">
+            <p-calendar [(ngModel)]="selectedDate" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true" [dateFormat]="'yy-mm-dd'"
+              [monthNavigator]="true" [yearNavigator]="true" [yearRange]="'2000:2030'" placeholder={{this.todaysDate}} (onSelect)="datewise()" [showIcon]="true"></p-calendar>
+          </div>
+
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Global Search"
+          />
+          <!-- <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text"  placeholder="Search keyword" />
+        </span> -->
+        </span>
+        <!-- <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            
+            placeholder="Global Search"
+          />
+        </span> -->
+      </div>
+        
+    </ng-template>
+    <ng-template pTemplate="header" >
+        
+      
+        <tr styleClass="row-accessories" >                            
+        <th pSortableColumn="team"  rowspan="2" style="text-align: center;background-color: rgb(245, 241, 241);" >
+          
+           <div class="flex justify-content-between align-items-center">
+            Teams
+            <p-sortIcon field="state"></p-sortIcon>
+            
+          </div> 
+        </th>
+        <th pSortableColumn="date" rowspan="2"  style="min-width: 14rem; text-align: center; background-color: rgb(245, 241, 241);" >
+            
+          <div class="flex justify-content-between align-items-center">
+           Date
+           <p-sortIcon field="date"></p-sortIcon>
+           
+         </div> 
+      </th>
+        <th colspan="3" class="text-center" style="min-width: 7rem;background-color: rgb(245, 241, 241);">Urban</th>
+                <th colspan="3" class="text-center" style="min-width: 50rem;background-color: rgb(245, 241, 241);;">Rural</th>
+                
+      </tr>
+      
+    
+
+      <tr>
+        <th pSortableColumn="noOfCompletedHhUrban" style="min-width: 14rem;text-align: center;background-color: rgb(245, 241, 241);;">
+          <div class="flex justify-content-between align-items-center">
+            Number of Completed Households
+            <p-sortIcon field="noOfCompletedHhUrban"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="noOfDeFactoEligibleMenInCompletedHhUrban" style="min-width: 17rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            Number of de Facto Eligible men in those HHs
+            <p-sortIcon field="noOfDeFactoEligibleMenInCompletedHhUrban"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="meanNoOfDeFactoEligibleMenPerHhUrban" style="min-width: 17rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            Mean number of de Facto Eligible men per HHs
+            <p-sortIcon field="meanNoOfDeFactoEligibleMenPerHhUrban"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="noOfCompletedHhRural" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            Number of Completed Households
+            <p-sortIcon field="noOfCompletedHhRural"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="noOfDeFactoEligibleMenInCompletedHhRural" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            Number of de Facto Eligible men in those HHs
+            <p-sortIcon field="noOfDeFactoEligibleMenInCompletedHhRural"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="meanNoOfDeFactoEligibleMenPerHhRural" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            Mean number of de Facto Eligible men per HHs
+            <p-sortIcon field="meanNoOfDeFactoEligibleMenPerHhRural"></p-sortIcon>
+            
+          </div>
+        </th>
+        <!-- <th style="width: 5rem"></th> -->
+      </tr> 
+      <tr  class="p-selectable-row">
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+        {{this.stateName}}
+        </th>
+
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+        
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('noOfCompletedHhUrban')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('noOfDeFactoEligibleMenInCompletedHhUrban')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateAverage('meanNoOfDeFactoEligibleMenPerHhUrban')|| 0 | number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('noOfCompletedHhRural')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('noOfDeFactoEligibleMenInCompletedHhRural')| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateAverage('meanNoOfDeFactoEligibleMenPerHhRural') || 0 | number : '.2-2'}}
+        </th>
+       
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-datalist>
+      <tr class="p-selectable-row">
+        
+        <td style="text-align: center;">
+          <span class="p-column-title">State</span>
+          {{ datalist.team }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">State</span>
+          {{ datalist.date }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Country</span>
+          
+          <span class="ml-1 vertical-align-middle"
+            >{{ datalist.noOfCompletedHhUrban || 0 }}</span
+          >
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Representative</span>
+          
+          <span class="ml-1 vertical-align-middle"
+            >{{ datalist.noOfDeFactoEligibleMenInCompletedHhUrban || 0 }}</span
+          >
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Date</span>
+          {{ datalist.meanNoOfDeFactoEligibleMenPerHhUrban || 0}}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Balance</span>
+          {{ datalist.noOfCompletedHhRural || 0 }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Status</span>
+          {{datalist.noOfDeFactoEligibleMenInCompletedHhRural || 0}}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Activity</span>
+        
+          {{ datalist.meanNoOfDeFactoEligibleMenPerHhRural || 0 }}
+        </td>
+        
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center">No Data Available</td>
+      </tr>
+    </ng-template>
+    
+  </p-table>
+</div>

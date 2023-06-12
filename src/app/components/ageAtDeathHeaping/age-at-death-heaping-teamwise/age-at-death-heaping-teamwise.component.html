@@ -1,0 +1,324 @@
+<div class="card">
+  <p-table                    
+    #dt
+    [value]="datadatewise"
+    [exportHeader]="'customExportHeader'"
+    exportFilename="Age-At-Death-Heaping-Teamwise"
+    [columns]="cols"
+    selectionMode="multiple"
+    [(selection)]="selectedDatalist"
+    dataKey="id"
+    [rowHover]="true"
+    [rows]="10" 
+    [showCurrentPageReport]="true" 
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="['team']"
+    styleClass="p-datatable-sm p-datatable-gridlines p-datatable-striped"
+>
+  
+    <ng-template pTemplate="caption">
+      <div class="table-header" style="font-size:x-large;">
+          FC-8: AGE AT DEATH HEAPING OF {{this.stateName | uppercase}} 
+      </div> 
+      <br/>
+      <div class="flex">
+          <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+
+          <div class="calendar-container" style="padding-left: 500px;padding-right: 3px;">
+            <p-calendar [(ngModel)]="selectedDate" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true" [dateFormat]="'yy-mm-dd'"
+              [monthNavigator]="true" [yearNavigator]="true" [yearRange]="'2000:2030'" placeholder={{this.todaysDate}} (onSelect)="datewise()" [showIcon]="true"></p-calendar>
+          </div>
+          
+      
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Global Search"
+          />
+         
+        </span>
+       
+      </div>
+        
+    </ng-template>
+    <ng-template pTemplate="header" >
+        
+      
+        <tr styleClass="row-accessories" >                            
+        <th pSortableColumn="team"  rowspan="2" style="text-align: center; background-color: rgb(245, 241, 241);" >
+          
+           <div class="flex justify-content-between align-items-center">
+            Team
+            <p-sortIcon field="team"></p-sortIcon>
+            
+          </div> 
+        </th>
+       
+        <th pSortableColumn="date" rowspan="2"  style="min-width: 14rem; text-align: center; background-color: rgb(245, 241, 241);" >
+          
+          <div class="flex justify-content-between align-items-center">
+           Date
+           <p-sortIcon field="date"></p-sortIcon>
+           
+         </div> 
+      </th>
+      
+      <th colspan="10" class="text-center" style="min-width: 7rem;background-color: rgb(245, 241, 241);">Age at death (in months)
+      </th>
+        <th rowspan="2" pSortableColumn="total8_16M" style="min-width: 15rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              Total 8-16 months (including "1 year")
+            <p-sortIcon field="total8_16M"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th rowspan="2" pSortableColumn="twelveMonthsRatio  " style="min-width: 15rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              12 months ratio (including "1 year")*
+            <p-sortIcon field="twelveMonthsRatio"></p-sortIcon>
+            
+          </div>
+        </th>
+      </tr>
+      
+    
+
+      <tr>
+        <th pSortableColumn="eightM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);;">
+          <div class="flex justify-content-between align-items-center">
+            8m. 
+            <p-sortIcon field="eightM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="nineM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            9m.
+            <p-sortIcon field="nineM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="tenM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            10m.
+            <p-sortIcon field="tenM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="elevenM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            11m.
+            <p-sortIcon field="elevenM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="twelveM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+            12m.
+            <p-sortIcon field="twelveM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="reportedAs1Year" style="min-width: 15rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              Reported as "1 year"
+            <p-sortIcon field="reportedAs1Year"></p-sortIcon>
+            
+          </div>
+        </th>
+
+        <th pSortableColumn="thirteenM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              13m.
+            <p-sortIcon field="thirteenM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="fourteenM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              14m.
+            <p-sortIcon field="fourteenM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="fifteenM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              15m.
+            <p-sortIcon field="fifteenM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <th pSortableColumn="sixteenM" style="min-width: 10rem;text-align: center;background-color: rgb(245, 241, 241);">
+          <div class="flex justify-content-between align-items-center">
+              16m.
+            <p-sortIcon field="sixteenM"></p-sortIcon>
+            
+          </div>
+        </th>
+        <!-- <th rowspan="2" class="text-center">Percent</th>
+        <th rowspan="2" class="text-center">Number</th> -->
+      
+
+      
+    </tr> 
+    <tr  class="p-selectable-row">
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+      {{this.stateName}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('8m')|| 0| number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('9m')|| 0| number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('10m')|| 0| number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('11m')|| 0| number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('12m')|| 0| number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('reportedAsOneYear') || 0 | number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('13m')|| 0| number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('14m')|| 0| number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('15m')|| 0| number : '.2-2'}}
+        </th>
+        <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateSum('16m')|| 0| number : '.2-2'}}
+        </th>
+      <th style="text-align: center;">
+        <span class="p-column-title"></span>
+        <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+        {{calculateSum('total') || 0 | number : '.2-2'}}
+      </th>
+      <th style="text-align: center;">
+          <span class="p-column-title"></span>
+          <!-- {{this.sumRowData.avg1 | number : '.2-2'}}% -->
+          {{calculateAverage('ratio') || 0 | number : '.2-2'}}
+        </th>
+    </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-datalist>
+      <tr class="p-selectable-row">
+        
+        <td style="text-align: center;">
+          <span class="p-column-title">State</span>
+          {{ datalist.state }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">State</span>
+          {{ datalist.date }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Completed</span>
+          
+          <span class="ml-1 vertical-align-middle"
+            >{{ datalist.eightM  }}</span
+          >
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Not at home</span>
+          
+          <span class="ml-1 vertical-align-middle"
+            >{{ datalist.nineM }}</span
+          >
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Postponed</span>
+          {{ datalist.tenM }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Refused</span>
+          {{ datalist.elevenM }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Partly Completed</span>
+          {{datalist.twelveM}}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Incapacited</span>
+          
+          {{ datalist.reportedAs1Year }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Other</span>
+          
+          {{ datalist.thirteenM }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Percentage</span>
+          
+          {{ datalist.fourteenM }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Number</span>
+          
+          {{ datalist.fifteenM }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Number</span>
+          
+          {{ datalist.sixteenM }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Number</span>
+          
+          {{ datalist.total8_16M }}
+        </td>
+        <td style="text-align: center;">
+          <span class="p-column-title">Number</span>
+          
+          {{ datalist.twelveMonthsRatio }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="14" class="text-center">No Data Available</td>  
+      </tr>
+    </ng-template>
+    
+  </p-table>
+</div>
