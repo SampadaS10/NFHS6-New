@@ -47,8 +47,8 @@ stateName!: string | null ;
       { field: 'c_9', header: '9' },
       { field: 'totalInPercent', header: 'Total' },
       { field: 'percentWithFirstDecimal_0_or_5', header: 'Percent With First Decimal 0 to 5' },
-      { field: 'numberOfMen', header: 'Number Of Men With Valid Weight Data' },
-  this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
+      { field: 'numberOfMen', header: 'Number Of Men With Valid Weight Data' },];
+  this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }))
  
    
 this.stateId=this.route.snapshot.paramMap.get('stateId');
